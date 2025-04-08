@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Purple Chatbot</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body Styling */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #200640, #2575fc);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      color: #fff;
+    }
+
+    /* Chat Container */
+    .chat-container {
+      width: 400px;
+      max-height: 600px;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    /* Chat Header */
+    .chat-header {
+      background: linear-gradient(135deg, #200640, #2575fc);
+      color: #fff;
+      text-align: center;
+      padding: 15px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+    }
+
+    /* Chat Box */
+    .chat-box {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .chat-box::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .chat-box::-webkit-scrollbar-thumb {
+      background: #200640;
+      border-radius: 10px;
+    }
+
+    .chat-box::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    /* Messages */
+    .message {
+      margin-bottom: 10px;
+      padding: 10px 15px;
+      border-radius: 15px;
+      max-width: 75%;
+      word-wrap: break-word;
+      position: relative;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .user-message {
+      background: #200640;
+      color: #fff;
+      align-self: flex-end;
+    }
+
+    .bot-message {
+      background: #f1f1f1;
+      color: #333;
+      align-self: flex-start;
+    }
+
+    /* Chat Input */
+    .chat-input {
+      display: flex;
+      padding: 10px;
+      background: #f9f9f9;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 25px;
+      outline: none;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .chat-input input:focus {
+      border-color: #200640;
+    }
+
+    .chat-input button {
+      margin-left: 10px;
+      padding: 10px 15px;
+      background: linear-gradient(135deg, #200640, #2575fc);
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    .chat-input button:hover {
+      background: #200640;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .chat-container {
+        width: 90%;
+        max-height: 80%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">MIND bot</div>
+    <div class="chat-box" id="chat-box"></div>
+    <div class="chat-input">
+      <input type="text" id="user-input" placeholder="HEY HOW ARE YOU FEELING TODAY" />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const OPENROUTER_API_KEY = "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";
+    const SITE_URL = "https://your-blogger-site.blogspot.com"; // Replace with your Blogger site URL
+    const SITE_NAME = "My Blogger Chatbot"; // Replace with your Blogger site name
+
+    async function sendMessage() {
+      const userInput = document.getElementById("user-input").value.trim();
+      if (!userInput) return;
+
+      // Append user message to chat box
+      appendMessage(userInput, "user");
+
+      // Clear input field
+      document.getElementById("user-input").value = "";
+
+      try {
+        // Call OpenRouter API
+        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+            "HTTP-Referer": SITE_URL,
+            "X-Title": SITE_NAME,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            model: "qwen/qwen-vl-plus:free",
+            messages: [
+              {
+                role: "user",
+                content: [
+                  {
+                    type: "text",
+                    text: userInput
+                  }
+                ]
+              }
+            ]
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`API error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const botMessage = data.choices[0].message.content;
+
+        // Append bot message to chat box
+        appendMessage(botMessage, "bot");
+      } catch (error) {
+        console.error("Error:", error);
+        appendMessage("Sorry, I encountered an error. Please try again later.", "bot");
+      }
+    }
+
+    function appendMessage(message, sender) {
+      const chatBox = document.getElementById("chat-box");
+      const messageDiv = document.createElement("div");
+      messageDiv.className = `message ${sender === "user" ? "user-message" : "bot-message"}`;
+      messageDiv.textContent = message;
+      chatBox.appendChild(messageDiv);
+
+      // Scroll to the bottom of the chat box
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  </script>
+</body>
+</html>
