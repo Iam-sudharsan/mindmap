@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources - Mind Map</title>
+    <style>
+        /* Dark theme styling with mood-based colors */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            animation: fadeIn 1s ease-in;
+        }
+
+        nav {
+            background-color: #1f1f1f;
+            padding: 10px 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        nav a {
+            color: #a0e0a0;
+            text-decoration: none;
+            padding: 10px 20px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        nav a:hover {
+            background-color: #388e3c;
+            border-radius: 5px;
+            transform: scale(1.1);
+        }
+
+        .content {
+            margin-top: 60px;
+            text-align: center;
+            animation: slideIn 1s ease-out;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #4caf50;
+        }
+
+        h2 {
+            color: #81c784;
+        }
+
+        p, a {
+            font-size: 1.1rem;
+            color: #bbb;
+        }
+
+        .mood-emoji {
+            font-size: 2rem;
+            animation: bounce 1.5s infinite ease-in-out;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            background-color: #1f1f1f;
+            color: #888;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li a {
+            color: #81c784;
+            text-decoration: none;
+        }
+
+        li a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="journal.html">Journal</a>
+        <a href="insights.html">Mood Insights</a>
+        <a href="resources.html">Resources</a>
+    </nav>
+
+    <div class="content">
+        <h1>Helpful Resources</h1>
+        <p>Explore guides, tools, and support for your mental health journey.</p>
+        <div class="mood-emoji calm">📚</div>
+
+        <h2>🌟 Helpful Websites</h2>
+        <ul>
+            <li><a href="https://www.nimhans.ac.in/" target="_blank">NIMHANS (National Institute of Mental Health and Neurosciences)</a></li>
+            <li><a href="https://www.sangath.in/" target="_blank">Sangath (Mental Health NGO)</a></li>
+            <li><a href="https://www.whiteswanfoundation.org/" target="_blank">White Swan Foundation (Mental Health Awareness)</a></li>
+        </ul>
+
+        <h2>💙 Self-Care Tips</h2>
+        <ul>
+            <li>🌅 Take regular breaks and step outside for fresh air.</li>
+            <li>🧘‍♀️ Practice mindfulness or meditation daily.</li>
+            <li>📝 Journal your thoughts and feelings.</li>
+            <li>🏃‍♂️ Stay active — even a short walk helps boost mood.</li>
+            <li>📲 Reach out to friends or family when you're feeling low.</li>
+        </ul>
+
+        <h2>📞 Emergency Helplines (India)</h2>
+        <ul>
+            <li><strong>📲 Tele-MANAS:</strong> 14416 (24/7 Mental Health Support)</li>
+            <li><strong>🌟 Vandrevala Foundation:</strong> +91 9999666555 (24/7)</li>
+            <li><strong>💙 iCALL:</strong> 9152987821 (10 AM – 8 PM, Mon-Sat)</li>
+        </ul>
+
+        <h2>Use Our AI Chatbot</h2>
+        <ul> <a href="mindbot.html">MIND bot</a></ul>
+    </div>
+</body>
+</html>

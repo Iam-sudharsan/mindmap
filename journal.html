@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Journal - Mind Map</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+    }
+    nav {
+      background-color: #1f1f1f;
+      padding: 10px 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+    nav a {
+      color: #a0e0a0;
+      text-decoration: none;
+      padding: 10px 20px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    nav a:hover {
+      background-color: #388e3c;
+      border-radius: 5px;
+      transform: scale(1.1);
+    }
+    .container {
+      margin-top: 70px;
+      width: 90%;
+      max-width: 700px;
+      padding: 20px;
+      animation: fadeSlideIn 1s ease forwards;
+    }
+    h1, h2 {
+      color: #4caf50;
+      opacity: 0;
+      transform: translateY(-10px);
+      animation: slideDown 0.8s ease-out forwards;
+    }
+    h2 {
+      animation-delay: 0.2s;
+    }
+    .question {
+      margin-bottom: 15px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
+    }
+    label {
+      display: block;
+      margin: 5px 0;
+    }
+    textarea, select {
+      width: 100%;
+      background-color: #1f1f1f;
+      color: #e0e0e0;
+      border: 1px solid #333;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 5px;
+    }
+    button {
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards;
+      animation-delay: 1s;
+    }
+    button:hover {
+      background-color: #388e3c;
+    }
+
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideDown {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="journal.html">Journal</a>
+    <a href="insights.html">Mood Insights</a>
+    <a href="resources.html">Resources</a>
+  </nav>
+
+  <div class="container">
+    <h1>📝 Journal Entry</h1>
+    <p>Answer these 15 questions to reflect on your day.</p>
+    <form id="quizForm">
+      <div id="questionsContainer"></div>
+
+      <h2>How was your day overall?</h2>
+      <select id="moodRating">
+        <option value="😞">😞 Very Bad</option>
+        <option value="😐">😐 Okay</option>
+        <option value="😊">😊 Good</option>
+        <option value="😄">😄 Great</option>
+        <option value="🌟">🌟 Amazing</option>
+      </select>
+
+      <h2>Free Journal</h2>
+      <textarea id="journalText" placeholder="Write anything you want..."></textarea>
+
+      <button type="button" onclick="submitJournal()">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      "Did you sleep well last night?",
+      "Did you eat nutritious meals today?",
+      "Did you stay hydrated?",
+      "Did you take time to relax?",
+      "Did you complete your goals for the day?",
+      "Did you interact with friends/family?",
+      "Did you get outside today?",
+      "Did you exercise or move your body?",
+      "Did you practice mindfulness or meditation?",
+      "Were you kind to yourself?",
+      "Did you avoid procrastination?",
+      "Did you feel proud of something?",
+      "Did you laugh today?",
+      "Did you do something creative?",
+      "Do you feel ready for tomorrow?"
+    ];
+
+    const container = document.getElementById("questionsContainer");
+    questions.forEach((q, i) => {
+      const delay = (i + 1) * 0.05;
+      container.innerHTML += `
+        <div class="question" style="animation-delay: ${delay}s">
+          <label>${i + 1}. ${q}</label>
+          <select name="q${i + 1}">
+            <option value="0">No</option>
+            <option value="1">A little</option>
+            <option value="2">Somewhat</option>
+            <option value="3">Yes</option>
+          </select>
+        </div>`;
+    });
+
+    function submitJournal() {
+      const form = document.forms["quizForm"];
+      let score = 0;
+      for (let i = 1; i <= 15; i++) {
+        score += parseInt(form["q" + i].value);
+      }
+
+      const mood = document.getElementById("moodRating").value;
+      const journalText = document.getElementById("journalText").value;
+      const date = new Date().toLocaleDateString();
+
+      const username = localStorage.getItem("user") || "Guest";
+      let data = JSON.parse(localStorage.getItem(username)) || [];
+      data.push({ date, mood, score, journal: journalText });
+      localStorage.setItem(username, JSON.stringify(data));
+
+      alert("Journal submitted! Score: " + score);
+      form.reset();
+      document.getElementById("journalText").value = "";
+    }
+  </script>
+</body>
+</html>

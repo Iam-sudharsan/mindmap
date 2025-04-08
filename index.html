@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MindTrack - Home</title>
+  <style>
+    /* Dark theme styling */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    nav {
+      background-color: #1f1f1f;
+      padding: 10px 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    nav a {
+      color: #a0e0a0;
+      text-decoration: none;
+      padding: 10px 20px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    nav a:hover {
+      background-color: #388e3c;
+      border-radius: 5px;
+      transform: scale(1.1);
+    }
+
+    section {
+      padding: 50px 20px;
+      text-align: center;
+      border-bottom: 1px solid #4caf50;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s forwards;
+    }
+
+    h1, h2 {
+      color: #4caf50;
+      margin-bottom: 20px;
+    }
+
+    p {
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    #home { background-color: #1f1f1f; }
+    #mission { background-color: #121212; }
+    #testimonials { background-color: #1f1f1f; }
+    #features { background-color: #121212; }
+    #login { background-color: #1f1f1f; }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #388e3c;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#mission">Mission</a>
+    <a href="#testimonials">Testimonials</a>
+    <a href="#features">Key Features</a>
+    <a href="login.html">Login</a>
+  </nav>
+
+  <section id="home">
+    <h1>Welcome to MindMap</h1>
+    <p>Your personalized mental health tracking companion.</p>
+    <p>Track your emotions, reflect on your thoughts, and gain insights to improve your mental well-being.</p>
+    <p>Start your journey towards a more mindful and balanced life today.</p>
+  </section>
+
+  <section id="mission">
+    <h2>Our Mission</h2>
+    <p>Empowering you to understand and improve your mental well-being.</p>
+    <p>We believe that mental health is just as important as physical health — and tracking it should be easy and insightful.</p>
+    <p>Our goal is to help you create a safe space for reflection and self-discovery, one day at a time.</p>
+  </section>
+
+  <section id="testimonials">
+    <h2>What Our Users Say</h2>
+    <p>"MindTrack has helped me stay aware of my emotions and feel more in control." - Alex</p>
+    <p>"A game-changer for journaling and mood tracking. I feel more mindful every day." - Jamie</p>
+    <p>"I never realized how much tracking my mood could help me notice patterns and improve my mindset." - Chris</p>
+  </section>
+
+  <section id="features">
+    <h2>Key Features</h2>
+    <ul>
+      <li>✅ Daily Mood Tracking with Emojis</li>
+      <li>📝 Journaling for Self-Reflection</li>
+      <li>📊 Personalized Mood Insights</li>
+      <li>📚 Helpful Mental Health Resources</li>
+      <li>💡 Motivational Tips Tailored to Your Mood</li>
+      <li>🌟 Progress Visualization to Celebrate Your Wins</li>
+    </ul>
+  </section>
+
+  <section id="login">
+    <h2>Login</h2>
+    <p>Get started with MindTrack today!</p>
+    <p>Join thousands of users taking control of their mental health journey.</p>
+    <a href="login.html">
+      <button>Login</button>
+    </a>
+  </section>
+  
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mood Insights</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #e0e0e0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    nav {
+      background-color: #1f1f1f;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    nav a {
+      color: #a0e0a0;
+      text-decoration: none;
+      padding: 10px 20px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    nav a:hover {
+      background-color: #388e3c;
+      border-radius: 5px;
+      transform: scale(1.1);
+    }
+    h1 {
+      color: #4caf50;
+      animation: fadeSlideIn 1s ease-out forwards;
+    }
+    .entry {
+      background-color: #1f1f1f;
+      padding: 15px;
+      margin: 10px auto;
+      border-radius: 8px;
+      max-width: 600px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+    .summary {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #81c784;
+      background-color: #1f1f1f;
+      padding: 15px;
+      border-radius: 8px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0;
+      transform: translateY(-10px);
+      animation: slideDown 1s ease-out forwards;
+      animation-delay: 0.5s;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideDown {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="journal.html">Journal</a>
+    <a href="insights.html">Mood Insights</a>
+    <a href="resources.html">Resources</a>
+  </nav>
+
+  <h1>📊 Mood Insights</h1>
+  <div id="summary" class="summary"></div>
+  <div id="entries"></div>
+
+  <script>
+    const username = localStorage.getItem("user") || "Guest";
+    const data = JSON.parse(localStorage.getItem(username)) || [];
+
+    const entriesDiv = document.getElementById("entries");
+    const summaryDiv = document.getElementById("summary");
+
+    let totalScore = 0;
+    const moodCount = {};
+
+    data.forEach((entry, index) => {
+      totalScore += entry.score;
+      moodCount[entry.mood] = (moodCount[entry.mood] || 0) + 1;
+
+      const delay = (index + 1) * 0.2;
+      entriesDiv.innerHTML += `
+        <div class="entry" style="animation-delay: ${delay}s">
+          <strong>${entry.date}</strong><br>
+          Mood: ${entry.mood} | Score: ${entry.score}<br>
+          <em>${entry.journal}</em>
+        </div>`;
+    });
+
+    const average = data.length ? (totalScore / data.length).toFixed(2) : 0;
+    const topMood = Object.entries(moodCount).reduce((a, b) => a[1] > b[1] ? a : b, ["😐", 0])[0];
+    const motivation = average > 30
+      ? "🌟 You're doing great, keep it up!"
+      : "💡 Take care of yourself, tomorrow is a new start.";
+
+    summaryDiv.innerHTML = `
+      Total Entries: ${data.length}<br>
+      Average Score: ${average}<br>
+      Most Common Mood: ${topMood}<br>
+      ${motivation}
+    `;
+  </script>
+</body>
+</html>
